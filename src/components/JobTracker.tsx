@@ -13,17 +13,12 @@ export const JobTracker: React.FC = () => {
   // Form state for adding an opportunity
   const [companyName, setCompanyName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
-  const [roleFamily, setRoleFamily] = useState<'cloud-infrastructure' | 'platform-engineering' | 'distributed-systems' | 'sre' | 'backend'>('cloud-infrastructure');
   const [jobUrl, setJobUrl] = useState('');
-  const [positionType, setPositionType] = useState<'internship' | 'full-time'>('internship');
   const [workArrangement, setWorkArrangement] = useState<WorkArrangement>('fully-remote');
   const [indiaEligibility, setIndiaEligibility] = useState<IndiaEligibility>('confirmed-eligible');
   const [eligibilitySourceNote, setEligibilitySourceNote] = useState('');
   const [gradYears, setGradYears] = useState('2030');
-  const [skills, setSkills] = useState('');
-  const [applicationOpens, setApplicationOpens] = useState('');
   const [applicationDeadline, setApplicationDeadline] = useState('');
-  const [returnOfferPathway, setReturnOfferPathway] = useState(true);
 
   const filteredJobs = jobs.filter((job) => {
     if (filterArrangement !== 'all' && job.workArrangement !== filterArrangement) return false;
@@ -39,19 +34,19 @@ export const JobTracker: React.FC = () => {
       id: 'job-' + Date.now(),
       companyName,
       jobTitle,
-      roleFamily,
+      roleFamily: 'cloud-infrastructure',
       jobUrl: jobUrl || 'https://',
-      positionType,
+      positionType: 'internship',
       permittedLocation: workArrangement === 'fully-remote' ? 'India (Remote)' : 'Bangalore / Hybrid',
       workArrangement,
       indiaEligibility,
       eligibilitySourceNote: eligibilitySourceNote || 'Manually verified via careers portal.',
       eligibleGraduationYears: gradYears.split(',').map((y) => parseInt(y.trim())).filter((n) => !isNaN(n)),
       minimumDegree: 'B.Tech CSE',
-      requiredSkills: skills.split(',').map((s) => s.trim()).filter(Boolean),
-      applicationOpens: applicationOpens || 'Rolling',
+      requiredSkills: ['Linux', 'Cloud Foundations', 'Git'],
+      applicationOpens: 'Rolling',
       applicationDeadline: applicationDeadline || 'Unspecified',
-      returnOfferPathwayDocumented: returnOfferPathway,
+      returnOfferPathwayDocumented: true,
       status: 'saved',
       lastVerifiedDate: new Date().toISOString().split('T')[0],
       followUpDate: '',
@@ -64,6 +59,7 @@ export const JobTracker: React.FC = () => {
     setJobTitle('');
     setJobUrl('');
     setEligibilitySourceNote('');
+    setApplicationDeadline('');
   };
 
   return (
